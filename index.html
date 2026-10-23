@@ -85,6 +85,9 @@
   .trop__a { width: 44%; aspect-ratio: 3 / 4; left: 0; top: 4%; --fond: var(--rouge); --r: -4deg; z-index: 2; }
   .trop__b { width: 38%; aspect-ratio: 3 / 4; right: 2%; top: 0; --fond: var(--cobalt); --r: 5deg; z-index: 3; }
   .trop__c { width: 30%; aspect-ratio: 1; left: 34%; bottom: 0; --r: -2deg; z-index: 4; }
+  .carte { background: var(--fond); display: grid; place-items: center; align-content: center; gap: .4rem; padding: 8%; box-shadow: 0 18px 40px -18px rgba(0,0,0,.55); }
+  .carte .smiley { width: 82%; height: auto; }
+  .carte figcaption { font-size: clamp(1.3rem, 2.4vw, 2rem); color: var(--blanc); transform: rotate(-3deg); }
   .trop__c img { width: 100%; height: 100%; object-fit: cover; }
   .trop__texte { position: relative; z-index: 5; display: grid; gap: 1rem; }
   .trop__texte .ital { font-size: clamp(2rem, 5vw, 4.2rem); line-height: 1; }
@@ -282,8 +285,23 @@
   <div class="rubrique"><span>Portrait</span><span>Hypersensible</span></div>
   <h2 class="affiche trop__mot" id="t-trop">Trop.</h2>
   <div class="trop__collage">
-    <figure class="trop__a bichro tourne scotch"><img src="img/img_9127.jpg" alt="Vase soufflé rouge et orange, aux éclats de couleur." loading="lazy"></figure>
-    <figure class="trop__b bichro tourne scotch" style="--sr: 6deg"><img src="img/img_9113.jpg" alt="Bulles de verre clair posées sur des anneaux, sur l'établi." loading="lazy"></figure>
+    <figure class="trop__a carte tourne scotch" style="--fond: var(--rouge)">
+      <svg class="smiley" viewBox="0 0 200 200" role="img" aria-label="Smiley content">
+        <path d="M178.0 100.0 L181.3 105.7 L182.9 111.6 L181.9 117.4 L178.4 122.5 L173.3 126.7 L168.0 130.3 L163.8 133.9 L161.3 138.3 L160.3 143.8 L159.8 150.1 L158.6 156.6 L156.0 162.2 L151.5 166.0 L145.6 167.6 L139.0 167.5 L132.6 166.9 L127.1 167.0 L122.3 168.8 L118.0 172.3 L113.5 176.8 L108.5 181.1 L102.9 183.7 L97.1 183.7 L91.5 181.1 L86.5 176.8 L82.0 172.3 L77.7 168.8 L72.9 167.0 L67.4 166.9 L61.0 167.5 L54.4 167.6 L48.5 166.0 L44.0 162.2 L41.4 156.6 L40.2 150.1 L39.7 143.8 L38.7 138.3 L36.2 133.9 L32.0 130.3 L26.7 126.7 L21.6 122.5 L18.1 117.4 L17.1 111.6 L18.7 105.7 L22.0 100.0 L25.7 94.8 L28.4 89.9 L29.3 85.0 L28.4 79.5 L26.7 73.3 L25.5 66.8 L26.1 60.7 L29.0 55.6 L34.0 52.1 L40.2 49.9 L46.4 48.3 L51.6 46.3 L55.5 43.0 L58.4 38.3 L61.0 32.5 L64.3 26.7 L68.6 22.4 L74.1 20.4 L80.3 20.9 L86.5 23.2 L92.2 25.9 L97.5 27.8 L102.5 27.8 L107.8 25.9 L113.5 23.2 L119.7 20.9 L125.9 20.4 L131.4 22.4 L135.7 26.7 L139.0 32.5 L141.6 38.3 L144.5 43.0 L148.4 46.3 L153.6 48.3 L159.8 49.9 L166.0 52.1 L171.0 55.6 L173.9 60.7 L174.5 66.8 L173.3 73.3 L171.6 79.5 L170.7 85.0 L171.6 89.9 L174.3 94.8 L178.0 100.0Z" fill="none" stroke="#CDE63D" stroke-width="12" stroke-linejoin="round"/>
+        <path d="M78 68 C70 72 68 92 74 104 C80 114 90 104 88 88 C86 74 84 66 78 68Z" fill="#CDE63D"/>
+        <path d="M118 68 C110 72 108 92 114 104 C120 114 130 104 128 88 C126 74 124 66 118 68Z" fill="#CDE63D"/>
+        <path d="M58 118 C76 152 124 152 142 118" fill="none" stroke="#CDE63D" stroke-width="10" stroke-linecap="round"/>
+      </svg>
+      <figcaption class="main">trop heureuse</figcaption></figure>
+    <figure class="trop__b carte tourne scotch" style="--fond: var(--cobalt); --sr: 6deg">
+      <svg class="smiley" viewBox="0 0 200 240" role="img" aria-label="Smiley triste qui fond">
+        <path d="M100 18 C150 18 182 54 182 100 C182 126 172 146 158 158 L158 190 C158 204 138 204 138 190 L138 172 C132 174 128 176 124 178 L124 214 C124 236 96 236 96 214 L96 180 C90 179 84 177 80 175 L80 186 C80 200 60 200 60 186 L60 164 C34 150 18 126 18 100 C18 54 50 18 100 18Z" fill="#F6B3C6" stroke="#0E1230" stroke-width="9" stroke-linejoin="round"/>
+        <ellipse cx="74" cy="84" rx="10" ry="18" fill="#0E1230"/>
+        <ellipse cx="126" cy="84" rx="10" ry="18" fill="#0E1230"/>
+        <path d="M62 140 C78 118 122 118 138 140" fill="none" stroke="#0E1230" stroke-width="9" stroke-linecap="round"/>
+        <path d="M128 106 C124 116 128 124 134 124 C140 124 142 116 136 106 L132 98Z" fill="#1E3CD2"/>
+      </svg>
+      <figcaption class="main">trop triste</figcaption></figure>
     <figure class="trop__c papier tourne"><img src="img/img_9139.jpg" alt="Suspensions ambre, rose et bordeaux, allumées." loading="lazy"></figure>
   </div>
   <div class="trop__texte">
