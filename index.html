@@ -51,7 +51,7 @@
   .bichro.clair img { mix-blend-mode: screen; filter: grayscale(1) contrast(1.3) brightness(.9); }
   .gommette { display: inline-grid; place-items: center; border-radius: 50%; font: 700 .72rem/1.1 var(--mono); text-transform: uppercase; letter-spacing: .08em; text-align: center; }
   .etiquette { display: inline-block; font: 700 .72rem/1 var(--mono); text-transform: uppercase; letter-spacing: .12em; padding: .45rem .7rem; background: var(--blanc); color: var(--encre); }
-  .lecteur { position: relative; }
+  .lecteur { position: relative; background: var(--poster) center / cover no-repeat; }
   .lecteur button { position: absolute; left: 10px; bottom: 10px; z-index: 4; border: 0; padding: .4rem .7rem; font: 700 .72rem var(--mono); letter-spacing: .12em; text-transform: uppercase; background: var(--chartreuse); color: var(--encre); cursor: pointer; }
   :focus-visible { outline: 3px solid var(--chartreuse); outline-offset: 3px; }
 
@@ -342,7 +342,7 @@
   <div class="rubrique"><span>Les grandes pièces</span><span>L'adrénaline</span></div>
   <h2 class="affiche feu__titre" id="t-feu">Le feu</h2>
   <div class="feu__grille">
-    <div class="lecteur tourne" style="--r: -2deg">
+    <div class="lecteur tourne" style="--r: -2deg; --poster: url(img/poster-img_9103.jpg)">
       <video muted loop playsinline preload="none" poster="img/poster-img_9103.jpg" aria-label="La bouche du four ouverte, la canne entre dans le verre en fusion.">
         <source src="video/img_9103.mp4" type="video/mp4">
       </video>
@@ -466,8 +466,10 @@
         <p class="bulle elle"><small>Valérie</small>« Mais c'est moi qui l'ai fait. »</p>
       </div>
       <p class="main" style="font-size: 1.8rem; color: var(--encre); margin-top: 1.6rem">il était trop fan</p>
+      <p class="texte">Ce qu'elle en retient :</p>
+      <p class="ital cite" style="font-size: clamp(1.5rem, 2.8vw, 2.2rem); line-height: 1.15; max-width: 30rem">Mais ça, je trouve hyper joli en fait. C'est vraiment d'échanges et puis de partage.</p>
     </div>
-    <div class="lecteur tourne" style="--r: 3deg">
+    <div class="lecteur tourne" style="--r: 3deg; --poster: url(img/poster-img_9126.jpg)">
       <video muted loop playsinline preload="none" poster="img/poster-img_9126.jpg" aria-label="Pièces soufflées orange, jaune et rouge sur l'établi.">
         <source src="video/img_9126.mp4" type="video/mp4">
       </video>
