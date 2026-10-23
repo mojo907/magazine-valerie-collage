@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valérie, Collage</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&family=Caveat:wght@600&display=swap">
+<style>
+  /* Même palette que la version en ligne (magazine-autre-version.html) */
+  :root {
+    color-scheme: light;
+    --cobalt: #1E3CD2; --nuit: #0C1A6B; --emeraude: #0E7A56; --chartreuse: #CDE63D;
+    --rouge: #E2361F; --ambre: #F2A22C; --rose: #F6B3C6; --givre: #EEF3F9;
+    --encre: #0E1230; --papier: #F4F1E8; --blanc: #fff;
+    --affiche: "Anton", "Impact", "Haettenschweiler", sans-serif;
+    --serif: "Instrument Serif", "Didot", Georgia, serif;
+    --mono: "Space Mono", "Courier New", monospace;
+    --main: "Caveat", "Bradley Hand", cursive;
+    --g: clamp(16px, 4vw, 56px);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--encre); color: var(--encre); font: 16px/1.6 var(--mono); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  /* Grain d'impression sur toute la publication */
+  body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50; opacity: .16; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  img, video { display: block; max-width: 100%; }
+  figure { margin: 0; }
+  p { margin: 0 0 1em; }
+  h1, h2, h3 { margin: 0; font-weight: 400; }
+  blockquote { margin: 0; }
+
+  /* Outils du collage */
+  .double { position: relative; min-height: 100svh; padding: clamp(56px, 7vw, 96px) var(--g); overflow: hidden; display: grid; gap: clamp(20px, 3vw, 40px); }
+  .folio { position: absolute; bottom: 14px; font: 700 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+  .folio.g { left: var(--g); } .folio.d { right: var(--g); }
+  .rubrique { position: absolute; top: 18px; left: var(--g); right: var(--g); display: flex; justify-content: space-between; font: 700 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+  .affiche { font-family: var(--affiche); text-transform: uppercase; line-height: .86; letter-spacing: -.01em; }
+  .ital { font-family: var(--serif); font-style: italic; }
+  .main { font-family: var(--main); line-height: 1.05; }
+  .cite::before { content: "«\00a0"; } .cite::after { content: "\00a0»"; }
+  .papier { background: var(--papier); padding: 14px 14px 16px; box-shadow: 0 18px 40px -18px rgba(0,0,0,.55); }
+  .scotch { position: relative; }
+  .scotch::before { content: ""; position: absolute; z-index: 3; top: -14px; left: 50%; width: 96px; height: 28px; transform: translateX(-50%) rotate(var(--sr, -4deg)); background: rgba(255,250,225,.62); box-shadow: 0 1px 2px rgba(0,0,0,.15); }
+  .dechire { clip-path: polygon(0 3%, 6% 0, 13% 2.5%, 21% .5%, 29% 3%, 37% 1%, 46% 3.5%, 55% .5%, 63% 2.5%, 72% 0, 80% 3%, 89% 1%, 100% 2.5%, 100% 97%, 93% 100%, 85% 97.5%, 76% 99.5%, 68% 97%, 59% 100%, 50% 97.5%, 41% 99.5%, 33% 97%, 24% 99.5%, 15% 97.5%, 7% 100%, 0 97.5%); }
+  .tourne { transform: rotate(var(--r, -2deg)); }
+  /* Bichromie : photo en niveaux de gris imprimée sur un aplat de couleur */
+  .bichro { background: var(--fond, var(--rouge)); overflow: hidden; }
+  .bichro img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.25) brightness(1.08); mix-blend-mode: multiply; }
+  .bichro.clair img { mix-blend-mode: screen; filter: grayscale(1) contrast(1.3) brightness(.9); }
+  .gommette { display: inline-grid; place-items: center; border-radius: 50%; font: 700 .72rem/1.1 var(--mono); text-transform: uppercase; letter-spacing: .08em; text-align: center; }
+  .etiquette { display: inline-block; font: 700 .72rem/1 var(--mono); text-transform: uppercase; letter-spacing: .12em; padding: .45rem .7rem; background: var(--blanc); color: var(--encre); }
+  .lecteur { position: relative; }
+  .lecteur button { position: absolute; left: 10px; bottom: 10px; z-index: 4; border: 0; padding: .4rem .7rem; font: 700 .72rem var(--mono); letter-spacing: .12em; text-transform: uppercase; background: var(--chartreuse); color: var(--encre); cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--chartreuse); outline-offset: 3px; }
+
+  /* 01 Couverture */
+  .couv { background: var(--cobalt); color: var(--blanc); min-height: 100svh; padding: 18px var(--g) 28px; display: grid; grid-template-rows: auto 1fr auto; position: relative; overflow: hidden; }
+  .couv__tete { display: flex; justify-content: space-between; align-items: center; gap: 1rem; position: relative; z-index: 4; font: 700 .72rem var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+  .couv__tete img { width: clamp(110px, 13vw, 170px); }
+  .couv__titre { position: relative; z-index: 4; pointer-events: none; font-size: clamp(6.5rem, 30vw, 27rem); color: var(--chartreuse); margin-top: .1em; }
+  .couv__photo { position: absolute; z-index: 2; right: 6%; bottom: 7%; width: clamp(200px, 36vw, 520px); aspect-ratio: 3 / 4; --fond: var(--rose); --r: 3deg; }
+  .couv__photo2 { position: absolute; z-index: 3; right: 34%; bottom: 4%; width: clamp(110px, 16vw, 230px); aspect-ratio: 1; --r: -7deg; }
+  .couv__photo2 img { width: 100%; height: 100%; object-fit: cover; }
+  .couv__bas { position: relative; z-index: 4; display: grid; gap: .5rem; max-width: 30rem; }
+  .couv__bas .ital { font-size: clamp(1.6rem, 3.6vw, 2.8rem); line-height: 1.05; }
+  .couv__gommette { position: absolute; z-index: 5; width: 104px; height: 104px; background: #C42A16; color: var(--blanc); right: 4%; top: 15%; transform: rotate(12deg); }
+
+  /* 02 Sommaire */
+  .sommaire { background: var(--papier); grid-template-columns: 1fr; }
+  .sommaire h2 { font-size: clamp(4rem, 13vw, 11rem); color: var(--cobalt); }
+  .sommaire ol { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; border-top: 2px solid var(--encre); }
+  .sommaire li a { display: grid; grid-template-columns: 3rem 1fr auto; align-items: center; gap: 1rem; padding: .7rem 0; border-bottom: 1px solid rgba(14,18,48,.25); text-decoration: none; color: inherit; }
+  .sommaire li b { font: 400 1.6rem/1 var(--affiche); color: var(--rouge); }
+  .sommaire li span { font: italic clamp(1.3rem, 2.4vw, 1.9rem)/1.1 var(--serif); }
+  .sommaire li i { width: clamp(70px, 12vw, 150px); height: 36px; background-size: cover; background-position: center; filter: grayscale(1) contrast(1.2); }
+  .sommaire li a:hover i, .sommaire li a:focus-visible i { filter: none; }
+
+  /* 03 Trop */
+  .trop { background: var(--chartreuse); }
+  .trop__mot { font-size: clamp(7rem, 34vw, 30rem); color: var(--encre); position: relative; z-index: 1; }
+  .trop__collage { position: relative; min-height: clamp(420px, 60vw, 760px); }
+  .trop__collage figure { position: absolute; }
+  .trop__a { width: 44%; aspect-ratio: 3 / 4; left: 0; top: 4%; --fond: var(--rouge); --r: -4deg; z-index: 2; }
+  .trop__b { width: 38%; aspect-ratio: 3 / 4; right: 2%; top: 0; --fond: var(--cobalt); --r: 5deg; z-index: 3; }
+  .trop__c { width: 30%; aspect-ratio: 1; left: 34%; bottom: 0; --r: -2deg; z-index: 4; }
+  .trop__c img { width: 100%; height: 100%; object-fit: cover; }
+  .trop__texte { position: relative; z-index: 5; display: grid; gap: 1rem; }
+  .trop__texte .ital { font-size: clamp(2rem, 5vw, 4.2rem); line-height: 1; }
+  .trop__texte .ital em { font-family: var(--affiche); font-style: normal; text-transform: uppercase; color: var(--rouge); font-size: 1.15em; letter-spacing: -.01em; }
+
+  /* 04 Planche contact */
+  .planche { background: var(--encre); color: var(--blanc); }
+  .planche h2 { font-size: clamp(3rem, 10vw, 8rem); color: var(--ambre); }
+  .planche__feuille { background: #141414; padding: clamp(10px, 2vw, 22px); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(6px, 1vw, 12px); position: relative; }
+  .planche__feuille figure { position: relative; }
+  .planche__feuille img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+  .planche__feuille figcaption { font: 700 .72rem var(--mono); color: var(--ambre); margin-top: 4px; letter-spacing: .1em; }
+  .entoure { position: absolute; inset: -8% -10%; pointer-events: none; z-index: 2; }
+  .entoure path { fill: none; stroke: var(--rouge); stroke-width: 4; stroke-linecap: round; }
+  .planche__note { font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--chartreuse); transform: rotate(-3deg); }
+
+  /* 05 Le feu */
+  .feu { background: var(--rouge); color: var(--encre); }
+  .feu__titre { font-size: clamp(3.6rem, 12vw, 11rem); color: var(--papier); text-shadow: 3px 3px 0 var(--encre); }
+  .feu__grille { display: grid; gap: clamp(20px, 3vw, 40px); align-items: start; }
+  .feu video { width: 100%; aspect-ratio: 9 / 14; object-fit: cover; border: 10px solid var(--papier); }
+  .feu__chiffres { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; margin-top: 1.4rem; }
+  .feu__chiffres div { background: var(--encre); color: var(--ambre); padding: .8rem .6rem; }
+  .feu__chiffres b { display: block; font: 400 clamp(1.8rem, 4vw, 3rem)/1 var(--affiche); }
+  .feu__chiffres span { font-size: .72rem; color: var(--papier); }
+  .feu .ital.grand { font-size: clamp(1.5rem, 3vw, 2.3rem); line-height: 1.15; }
+
+  /* 06 Origines */
+  .origines { background: var(--papier); }
+  .origines h2 { font-size: clamp(3.4rem, 11vw, 9.5rem); color: var(--emeraude); }
+  .billets { display: flex; flex-wrap: wrap; gap: 12px; margin: .5rem 0 1rem; }
+  .billet { background: var(--blanc); border: 2px dashed var(--encre); padding: .6rem .9rem; transform: rotate(var(--r, -2deg)); min-width: 130px; }
+  .billet b { display: block; font: 400 1.5rem/1 var(--affiche); text-transform: uppercase; color: var(--cobalt); }
+  .billet span { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+  .origines__grille { display: grid; gap: clamp(20px, 3vw, 40px); align-items: start; }
+  .origines__photo { aspect-ratio: 4 / 5; --fond: var(--emeraude); --r: 2deg; }
+  .origines .marge { font-size: clamp(1.5rem, 2.4vw, 2rem); color: var(--rouge); transform: rotate(-2deg); }
+
+  /* 07 Volupté */
+  .volupte { background: var(--nuit); color: var(--blanc); }
+  .volupte__titre { margin-bottom: .25em; font-size: clamp(4rem, 15vw, 13rem); color: transparent; -webkit-text-stroke: 2px var(--givre); }
+  .volupte__titre span { color: var(--cobalt); -webkit-text-stroke: 0; background: var(--givre); padding: 0 .08em; }
+  .volupte__grille { display: grid; gap: clamp(20px, 3vw, 40px); align-items: start; }
+  .volupte__photos { position: relative; min-height: clamp(480px, 62vw, 780px); }
+  .volupte__photos figure { position: absolute; }
+  .vol__a { width: 62%; left: 0; top: 0; --r: -3deg; }
+  .vol__a img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+  .vol__b { width: 52%; right: 0; bottom: 0; aspect-ratio: 3 / 4; --fond: var(--cobalt); --r: 4deg; }
+  .volupte .ital.grand { font-size: clamp(1.7rem, 3.4vw, 2.7rem); line-height: 1.12; }
+  .volupte .main { color: var(--chartreuse); font-size: clamp(1.5rem, 2.4vw, 2rem); }
+
+  /* 08 Mémoire du verre */
+  .memoire { background: var(--givre); }
+  .memoire h2 { font-size: clamp(3.4rem, 11vw, 9.5rem); color: var(--cobalt); }
+  .formes { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(10px, 2vw, 26px); align-items: end; }
+  .formes figure { position: relative; }
+  .formes img { width: 100%; object-fit: cover; }
+  .f-rond img { aspect-ratio: 1; border-radius: 50%; }
+  .f-cube img { aspect-ratio: 1; }
+  .f-pave img { aspect-ratio: 3 / 5; }
+  .formes figcaption { font: 400 clamp(2rem, 5vw, 4rem)/1 var(--affiche); text-transform: uppercase; color: var(--rouge); margin-top: .3rem; }
+  .memoire .ital.grand { font-size: clamp(1.6rem, 3.2vw, 2.6rem); line-height: 1.12; max-width: 40rem; }
+
+  /* 09 Le mur */
+  .mur { background: var(--encre); color: var(--blanc); }
+  .mur__grille { display: grid; gap: clamp(20px, 3vw, 40px); align-items: center; }
+  .mur__photo { position: relative; }
+  .mur__photo img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+  .nuancier { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
+  .pastille { background: var(--blanc); color: var(--encre); padding: 6px 6px 8px; }
+  .pastille i { display: block; aspect-ratio: 1; background: var(--c); }
+  .pastille b { display: block; font: 700 .72rem/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; margin-top: 6px; }
+  .mur h2 { font-size: clamp(3rem, 9vw, 7.5rem); color: var(--rose); }
+
+  /* 10 Gouttes */
+  .gouttes { background: var(--blanc); text-align: center; justify-items: center; }
+  .gouttes h2 { font-size: clamp(2.4rem, 6vw, 5rem); font-family: var(--serif); font-style: italic; text-transform: none; color: var(--encre); max-width: 18ch; line-height: 1; }
+  .compte { display: flex; gap: clamp(8px, 2vw, 20px); justify-content: center; align-items: end; }
+  .compte span { font: 400 clamp(3rem, 9vw, 7rem)/1 var(--affiche); color: #d5d5d5; }
+  .compte span.belle { color: var(--cobalt); }
+  .gouttes figure { width: min(340px, 80vw); --r: 2deg; }
+  .gouttes figure img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+  .gouttes .texte { max-width: 34rem; text-align: left; }
+
+  /* 11 Romont */
+  .romont { background: var(--rose); }
+  .romont h2 { font-size: clamp(3.2rem, 10vw, 8.5rem); color: var(--cobalt); }
+  .romont h2 s { white-space: nowrap; text-decoration-color: var(--encre); text-decoration-thickness: .08em; }
+  .bulles { display: grid; gap: 1.2rem; max-width: 34rem; }
+  .bulle { position: relative; padding: 1rem 1.2rem; border: 3px solid var(--encre); background: var(--blanc); font-size: 1.05rem; }
+  .bulle::after { content: ""; position: absolute; bottom: -16px; left: 28px; width: 24px; height: 16px; background: inherit; border: 3px solid var(--encre); border-top: 0; clip-path: polygon(0 0, 100% 0, 0 100%); }
+  .bulle.elle { justify-self: end; background: var(--cobalt); color: var(--blanc); font: italic 1.5rem/1.2 var(--serif); }
+  .bulle.elle::after { left: auto; right: 28px; clip-path: polygon(0 0, 100% 0, 100% 100%); }
+  .bulle small { display: block; font: 700 .72rem var(--mono); letter-spacing: .14em; text-transform: uppercase; opacity: .8; margin-bottom: .3rem; font-style: normal; }
+  .romont__grille { display: grid; gap: clamp(20px, 3vw, 40px); align-items: start; }
+  .romont video { width: 100%; aspect-ratio: 9 / 14; object-fit: cover; border: 10px solid var(--blanc); }
+
+  /* 12 Presque rien */
+  .rien { background: var(--blanc); min-height: 100svh; place-items: center; text-align: center; }
+  .rien .ital { font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: 1; color: var(--encre); }
+  .rien figure { width: clamp(90px, 12vw, 140px); margin: 2.5rem auto; }
+  .rien figure img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 50%; }
+  .rien .coeur { font-family: var(--serif); font-style: italic; font-size: clamp(1.15rem, 2vw, 1.5rem); line-height: 1.4; }
+
+  /* 13 Ciel */
+  .ciel { background: var(--ambre); }
+  .ciel h2 { font-size: clamp(3.4rem, 11vw, 9.5rem); color: var(--encre); }
+  .ciel__grille { display: grid; gap: clamp(20px, 3vw, 40px); align-items: start; }
+  .trajet { width: 100%; height: auto; }
+  .trajet path { fill: none; stroke: var(--encre); stroke-width: 2.5; stroke-dasharray: 8 8; }
+  .ciel figure { --r: -3deg; }
+  .ciel figure img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+  .ciel .ital.grand { font-size: clamp(1.6rem, 3.2vw, 2.5rem); line-height: 1.12; }
+  .outils { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  /* 14 Quatrième de couverture */
+  .dos { background: var(--emeraude); color: var(--blanc); min-height: 100svh; align-content: end; }
+  .dos__mot { font-size: clamp(7rem, 32vw, 28rem); color: var(--chartreuse); }
+  .dos blockquote { font: italic clamp(2rem, 5vw, 4rem)/1.02 var(--serif); max-width: 22ch; }
+  .credits { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; border-top: 2px solid var(--chartreuse); padding-top: 1rem; margin-top: 2rem; font-size: .75rem; letter-spacing: .06em; }
+  .credits img { width: 34px; }
+
+  .texte { max-width: 36rem; font-size: .95rem; }
+
+  @media (min-width: 860px) {
+    .couv__photo { width: clamp(220px, 25vw, 420px); right: 7%; bottom: -3%; }
+    .couv__photo2 { right: 36%; bottom: 6%; }
+    .trop { grid-template-columns: 1.15fr 1fr; align-items: center; }
+    .trop__mot { grid-column: 1 / -1; }
+    .feu__grille { grid-template-columns: .8fr 1.2fr; }
+    .origines__grille { grid-template-columns: 1.2fr .8fr; }
+    .volupte__grille { grid-template-columns: 1fr 1fr; }
+    .mur__grille { grid-template-columns: .9fr 1.1fr; }
+    .romont__grille { grid-template-columns: 1.3fr .7fr; }
+    .ciel__grille { grid-template-columns: 1.2fr .8fr; }
+    .sommaire { grid-template-columns: .9fr 1.1fr; align-items: start; }
+  }
+  @media (max-width: 859px) {
+    .couv__photo { width: 58vw; right: 4%; bottom: 20%; }
+    .couv__photo2 { width: 34vw; right: auto; left: 4%; bottom: 30%; }
+    .couv__titre { font-size: 23.5vw; }
+    .trop__a { width: 54%; } .trop__b { width: 48%; top: 6%; } .trop__c { width: 44%; left: 28%; }
+    .couv__gommette { width: 84px; height: 84px; top: auto; bottom: 62%; right: 6%; }
+    .couv__bas { margin-top: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+
+<!-- 01 Couverture -->
+<header class="couv">
+  <div class="couv__tete">
+    <img src="img/myesthete-logo-blanc.png" alt="MY ESTHÈTE">
+    <span>N°02 · Portraits · Pomy</span>
+  </div>
+  <h1 class="affiche couv__titre">Valérie</h1>
+  <figure class="couv__photo bichro tourne scotch" style="--sr: 3deg"><img src="img/img_9142.jpg" alt="Valérie de Roquemaurel devant son four rouge, une main sur la hanche."></figure>
+  <figure class="couv__photo2 papier tourne"><img src="img/img_9122.jpg" alt="Sphères de verre satiné bleu, blanc et vert, posées en équilibre."></figure>
+  <span class="gommette couv__gommette">Souffleuse<br>de verre<br>depuis<br>20 ans</span>
+  <div class="couv__bas">
+    <span class="etiquette" style="justify-self: start; background: var(--chartreuse)">de Roquemaurel</span>
+    <p class="ital">Une matière en transe, une femme qui ne tient pas en place.</p>
+  </div>
+</header>
+
+<main>
+
+<!-- 02 Sommaire -->
+<section class="double sommaire" aria-labelledby="t-sommaire">
+  <div class="rubrique"><span>MY ESTHÈTE</span><span>Sommaire</span></div>
+  <h2 class="affiche" id="t-sommaire">Au<br>menu</h2>
+  <ol>
+    <li><a href="#trop"><b>03</b><span>Trop heureuse, trop triste</span><i style="background-image: url(img/img_9141.jpg)"></i></a></li>
+    <li><a href="#planche"><b>04</b><span>Impossible de tenir la pose</span><i style="background-image: url(img/img_9143.jpg)"></i></a></li>
+    <li><a href="#feu"><b>05</b><span>Le feu et les frissons</span><i style="background-image: url(img/poster-img_9103.jpg)"></i></a></li>
+    <li><a href="#origines"><b>06</b><span>De Toulouse à Pomy</span><i style="background-image: url(img/img_9133.jpg)"></i></a></li>
+    <li><a href="#volupte"><b>07</b><span>En transe</span><i style="background-image: url(img/img_9131.jpg)"></i></a></li>
+    <li><a href="#memoire"><b>08</b><span>Rond, cube, pavé</span><i style="background-image: url(img/img_9137.jpg)"></i></a></li>
+    <li><a href="#mur"><b>09</b><span>Le mur des couleurs</span><i style="background-image: url(img/img_9118.jpg)"></i></a></li>
+    <li><a href="#gouttes"><b>10</b><span>Six gouttes</span><i style="background-image: url(img/img_9124.jpg)"></i></a></li>
+    <li><a href="#romont"><b>11</b><span>Mais c'est moi qui l'ai fait</span><i style="background-image: url(img/img_9127.jpg)"></i></a></li>
+    <li><a href="#rien"><b>12</b><span>Presque rien</span><i style="background-image: url(img/img_9123.jpg)"></i></a></li>
+    <li><a href="#ciel"><b>13</b><span>Depuis le ciel</span><i style="background-image: url(img/img_9138.jpg)"></i></a></li>
+  </ol>
+  <span class="folio g">02</span>
+</section>
+
+<!-- 03 Trop -->
+<section class="double trop" id="trop" aria-labelledby="t-trop">
+  <div class="rubrique"><span>Portrait</span><span>Hypersensible</span></div>
+  <h2 class="affiche trop__mot" id="t-trop">Trop.</h2>
+  <div class="trop__collage">
+    <figure class="trop__a bichro tourne scotch"><img src="img/img_9141.jpg" alt="Valérie rit, devant ses fours." loading="lazy"></figure>
+    <figure class="trop__b bichro tourne scotch" style="--sr: 6deg"><img src="img/img_9145.jpg" alt="Valérie, lunettes de soleil, appuyée contre le four." loading="lazy"></figure>
+    <figure class="trop__c papier tourne"><img src="img/img_9139.jpg" alt="Suspensions ambre, rose et bordeaux, allumées." loading="lazy"></figure>
+  </div>
+  <div class="trop__texte">
+    <p class="ital">Quand je suis heureuse, je suis <em>trop</em> heureuse. Et quand je suis triste, je suis <em>trop</em> triste.</p>
+    <p class="texte">Valérie se dit hypersensible, « avec les beaux et les mauvais côtés ». L'ouïe, le toucher, l'émotion : tout arrive plus fort. Elle se range aussi « dans les hyperactifs » : vélo, danse, chroniques pour un magazine, et depuis 2023, des leçons de pilotage.</p>
+    <p class="main" style="font-size: 1.8rem; color: var(--rouge)">« Moi j'aime tout, j'aime les défis. »</p>
+  </div>
+  <span class="folio g">03</span><span class="folio d">Valérie de Roquemaurel</span>
+</section>
+
+<!-- 04 Planche contact -->
+<section class="double planche" id="planche" aria-labelledby="t-planche">
+  <div class="rubrique"><span>Planche contact</span><span>Atelier de Pomy</span></div>
+  <h2 class="affiche" id="t-planche">Six poses, zéro pause</h2>
+  <div class="planche__feuille">
+    <figure><img src="img/img_9141.jpg" alt="Valérie rit devant le four." loading="lazy"><figcaption>9141</figcaption></figure>
+    <figure><img src="img/img_9142.jpg" alt="Valérie sourit, une main sur la hanche." loading="lazy"><figcaption>9142</figcaption>
+      <svg class="entoure" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M50 4 C82 2 97 22 96 50 C95 80 76 97 48 96 C18 95 3 76 4 48 C5 22 24 6 56 7"/></svg></figure>
+    <figure><img src="img/img_9143.jpg" alt="Valérie en lunettes de soleil." loading="lazy"><figcaption>9143</figcaption></figure>
+    <figure><img src="img/img_9144.jpg" alt="Valérie, le regard ailleurs." loading="lazy"><figcaption>9144</figcaption></figure>
+    <figure><img src="img/img_9145.jpg" alt="Valérie, appuyée contre le four." loading="lazy"><figcaption>9145</figcaption></figure>
+    <figure><img src="img/img_9146.jpg" alt="Valérie baisse les yeux, souriante." loading="lazy"><figcaption>9146</figcaption></figure>
+  </div>
+  <p class="main planche__note">impossible de tenir la pose</p>
+  <span class="folio g">04</span>
+</section>
+
+<!-- 05 Le feu -->
+<section class="double feu" id="feu" aria-labelledby="t-feu">
+  <div class="rubrique"><span>Les grandes pièces</span><span>L'adrénaline</span></div>
+  <h2 class="affiche feu__titre" id="t-feu">Le feu</h2>
+  <div class="feu__grille">
+    <div class="lecteur tourne" style="--r: -2deg">
+      <video muted loop playsinline preload="none" poster="img/poster-img_9103.jpg" aria-label="La bouche du four ouverte, la canne entre dans le verre en fusion.">
+        <source src="video/img_9103.mp4" type="video/mp4">
+      </video>
+      <button type="button">Pause</button>
+    </div>
+    <div>
+      <p class="ital grand cite">Rien qu'à y penser, j'ai des frissons.</p>
+      <p class="texte">Un photophore ou un grand vase, le plaisir est le même. Mais les très grandes pièces apportent l'adrénaline.</p>
+      <p class="texte cite">Il y a vraiment un engagement du corps aussi, c'est lourd, on peut se blesser, on peut se brûler, c'est dangereux. On ne sait pas si on va y arriver.</p>
+      <p class="texte">Le luminaire conçu pour une école :</p>
+      <div class="feu__chiffres">
+        <div><b>2,80 m</b><span>de haut</span></div>
+        <div><b>60 kg</b><span>de verre</span></div>
+        <div><b>6</b><span>côtés pour le voir</span></div>
+      </div>
+    </div>
+  </div>
+  <span class="folio g">05</span>
+</section>
+
+<!-- 06 Origines -->
+<section class="double origines" id="origines" aria-labelledby="t-origines">
+  <div class="rubrique"><span>D'où vient le verre</span><span>Carnet de route</span></div>
+  <h2 class="affiche" id="t-origines">Toulouse → Pomy</h2>
+  <div class="origines__grille">
+    <div>
+      <div class="billets" aria-label="Itinéraire">
+        <div class="billet" style="--r: -3deg"><b>Toulouse</b><span>cristal de famille, vitraux</span></div>
+        <div class="billet" style="--r: 2deg"><b>Montpellier</b><span>le verre soufflé à la main</span></div>
+        <div class="billet" style="--r: -1deg"><b>Nancy</b><span>apprendre à souffler</span></div>
+        <div class="billet" style="--r: 3deg"><b>Yverdon · 2007</b><span>l'ancienne usine Leclanché</span></div>
+        <div class="billet" style="--r: -2deg"><b>Pomy · 2013</b><span>l'atelier au calme</span></div>
+      </div>
+      <p class="texte">Chez ses grands-parents, des pièces des grandes cristalleries françaises, des miroirs, des lustres. Avec son grand-père, les églises et leurs vitraux, « avec la projection des couleurs ».</p>
+      <p class="texte">Dix ans d'études après le bac, puis les stages. Chez un souffleur au chalumeau qui fabrique des pièces de moteur : <span class="cite">ce n'était pas hyper sexy</span>. À Montpellier, enfin, elle découvre <span class="cite">qu'effectivement on pouvait le travailler à la main</span>.</p>
+      <p class="main marge">Elle rêvait d'un stage chez Jean-Michel Othoniel : refusé. Des années plus tard, elle fabrique les perles… pour Othoniel.</p>
+      <p class="texte" style="margin-top: 1rem">Et la Suisse, pays sans tradition verrière : <span class="cite">je ne voulais pas faire des petits canards pour les touristes</span>.</p>
+    </div>
+    <figure class="origines__photo bichro tourne scotch dechire"><img src="img/img_9133.jpg" alt="Flacon bleu aplati, coiffé d'une sphère de cristal." loading="lazy"></figure>
+  </div>
+  <span class="folio g">06</span>
+</section>
+
+<!-- 07 Volupté -->
+<section class="double volupte" id="volupte" aria-labelledby="t-volupte">
+  <div class="rubrique"><span>La collection Volupté</span><span>Désapprendre</span></div>
+  <h2 class="affiche volupte__titre" id="t-volupte">En <span>transe</span></h2>
+  <div class="volupte__grille">
+    <div class="volupte__photos">
+      <figure class="vol__a papier tourne scotch"><img src="img/img_9119.jpg" alt="Vase bleu cobalt givré, le haut découpé en volutes, à côté de pièces à facettes rouges." loading="lazy"></figure>
+      <figure class="vol__b bichro clair tourne dechire"><img src="img/img_9131.jpg" alt="Détail d'une coupe givrée sculptée de volutes bleu pâle." loading="lazy"></figure>
+    </div>
+    <div>
+      <p class="texte">Au bout de dix ans, on maîtrise la matière, dit-on. Valérie a fait l'inverse.</p>
+      <p class="ital grand cite">J'ai voulu désapprendre et la laisser s'exprimer en fait par elle-même.</p>
+      <p class="ital grand cite" style="color: var(--chartreuse)">Je le fais partir en transe et il faut arriver à le figer dans sa transe.</p>
+      <p class="texte">Les bleus partent plus vite au soufflage, plus fragiles, plus souples. Puis le sablage creuse les volutes, et la surprise reste entière : <span class="cite">on ne sait jamais ce que ça donnera tant qu'elle ne sera pas terminée</span>.</p>
+      <p class="main">regardez les reflets</p>
+    </div>
+  </div>
+  <span class="folio g">07</span>
+</section>
+
+<!-- 08 Mémoire du verre -->
+<section class="double memoire" id="memoire" aria-labelledby="t-memoire">
+  <div class="rubrique"><span>Leçon de matière</span><span>Le reflet ne pardonne pas</span></div>
+  <h2 class="affiche" id="t-memoire">Le verre se souvient</h2>
+  <div class="formes">
+    <figure class="f-rond"><img src="img/img_9122.jpg" alt="Sphères de verre satiné bleu, blanc et vert." loading="lazy"><figcaption>Rond</figcaption></figure>
+    <figure class="f-cube"><img src="img/img_9137.jpg" alt="Vases à facettes bleu nuit, vert et gris." loading="lazy"><figcaption>Cube</figcaption></figure>
+    <figure class="f-pave"><img src="img/img_9128.jpg" alt="Deux flacons cylindriques, vert anis et vert bouteille." loading="lazy"><figcaption>Pavé</figcaption></figure>
+  </div>
+  <p class="ital grand cite">Si on fait un cube, puis qu'après on fait un rond, puis qu'on refait un pavé avec, le verre, il va se souvenir qu'il aura été rond, qu'il aura été cube.</p>
+  <p class="texte">« C'est une matière qui a du caractère. » Il refroidit vite, se fige, et garde la trace de chaque geste dans ses reflets.</p>
+  <span class="folio g">08</span>
+</section>
+
+<!-- 09 Le mur -->
+<section class="double mur" id="mur" aria-labelledby="t-mur">
+  <div class="rubrique"><span>Le nuancier de l'atelier</span><span>Écrit à la main</span></div>
+  <div class="mur__grille">
+    <figure class="mur__photo tourne scotch" style="--r: -2deg"><img src="img/img_9115.jpg" alt="Le mur de sphères d'essai colorées, annotées à la main." loading="lazy"></figure>
+    <div>
+      <h2 class="affiche" id="t-mur">Chaque boule, une recette</h2>
+      <p class="texte" style="margin-top: 1rem">Sur le mur de l'atelier, chaque sphère d'essai porte au feutre le nom de sa teinte. La palette de ce numéro vient de là.</p>
+      <div class="nuancier">
+        <div class="pastille"><i style="--c: var(--cobalt)"></i><b>Cobalt</b></div>
+        <div class="pastille"><i style="--c: var(--emeraude)"></i><b>Émeraude</b></div>
+        <div class="pastille"><i style="--c: var(--chartreuse)"></i><b>Chartreuse</b></div>
+        <div class="pastille"><i style="--c: var(--ambre)"></i><b>Ambre</b></div>
+        <div class="pastille"><i style="--c: var(--rouge)"></i><b>Rouge</b></div>
+        <div class="pastille"><i style="--c: var(--rose)"></i><b>Rose</b></div>
+      </div>
+    </div>
+  </div>
+  <span class="folio g">09</span>
+</section>
+
+<!-- 10 Gouttes -->
+<section class="double gouttes" id="gouttes" aria-labelledby="t-gouttes">
+  <div class="rubrique"><span>Vingt ans de persévérance</span><span>Yverdon-les-Bains</span></div>
+  <div class="compte" aria-label="Six gouttes, les deux dernières réussies"><span>1</span><span>2</span><span>3</span><span>4</span><span class="belle">5</span><span class="belle">6</span></div>
+  <h2 id="t-gouttes" class="cite">Je les trouve hyper belles, mes gouttes.</h2>
+  <figure class="papier tourne scotch"><img src="img/img_9124.jpg" alt="Sculpture de verre clair en forme de goutte." loading="lazy"></figure>
+  <div class="texte">
+    <p>Depuis une dizaine d'années, elle souffle des pièces en forme de gouttes pour la ville d'Yverdon-les-Bains. Le jour de l'entretien, six venaient d'être faites. <span class="cite">C'est les deux dernières qui sont vraiment belles.</span></p>
+    <p>Elle y voit le cadeau de vingt ans de travail. Et la satisfaction, devant les jeunes qui débutent, de pouvoir se dire <span class="cite">ça, je sais faire</span>.</p>
+  </div>
+  <span class="folio g">10</span>
+</section>
+
+<!-- 11 Romont -->
+<section class="double romont" id="romont" aria-labelledby="t-romont">
+  <div class="rubrique"><span>Musée de Romont</span><span>Nuit des musées</span></div>
+  <h2 class="affiche" id="t-romont">La technique tue <s>la poésie</s></h2>
+  <div class="romont__grille">
+    <div>
+      <p class="texte">Elle préfère qu'on ne comprenne pas tout. Se demander si la pièce est creuse ou pleine, c'est déjà une émotion. Un soir, devant son grand luminaire :</p>
+      <div class="bulles">
+        <p class="bulle"><small>Des jeunes, en pleine séance photo</small>« Eh madame, si vous voulez, on vous prend en photo. »</p>
+        <p class="bulle elle"><small>Valérie</small>« Mais c'est moi qui l'ai fait. »</p>
+      </div>
+      <p class="main" style="font-size: 1.8rem; color: var(--encre); margin-top: 1.6rem">il était trop fan</p>
+    </div>
+    <div class="lecteur tourne" style="--r: 3deg">
+      <video muted loop playsinline preload="none" poster="img/poster-img_9126.jpg" aria-label="Pièces soufflées orange, jaune et rouge sur l'établi.">
+        <source src="video/img_9126.mp4" type="video/mp4">
+      </video>
+      <button type="button">Pause</button>
+    </div>
+  </div>
+  <span class="folio g">11</span>
+</section>
+
+<!-- 12 Presque rien -->
+<section class="double rien" id="rien" aria-labelledby="t-rien">
+  <div class="rubrique"><span>Le beau</span><span>Silence</span></div>
+  <div>
+    <h2 class="ital cite" id="t-rien">C'est presque rien.</h2>
+    <figure><img src="img/img_9123.jpg" alt="Sphère de verre clair traversée de volutes bleues." loading="lazy"></figure>
+    <p class="coeur cite">Souvent c'est mon cœur qui parle. Mon cerveau, il sert à lui donner raison.</p>
+  </div>
+  <span class="folio g">12</span>
+</section>
+
+<!-- 13 Ciel -->
+<section class="double ciel" id="ciel" aria-labelledby="t-ciel">
+  <div class="rubrique"><span>Si demain tout changeait</span><span>Plan de vol</span></div>
+  <h2 class="affiche" id="t-ciel">Depuis le ciel</h2>
+  <div class="ciel__grille">
+    <div>
+      <svg class="trajet" viewBox="0 0 600 120" aria-hidden="true"><path d="M10 100 C120 10 220 110 330 50 S520 20 590 70"/><circle cx="10" cy="100" r="7" fill="#0E1230"/><circle cx="590" cy="70" r="7" fill="#E2361F"/></svg>
+      <p class="texte">Une manufacture haut de gamme à Saint-Prex, avec un musée et des employés. Des chantiers de luminaires aux quatre coins du monde. Et le monde vu d'en haut : depuis 2023, elle apprend à piloter.</p>
+      <p class="ital grand cite">Je passerais ma vie aux quatre coins du monde avec un papier, un crayon et un ordinateur.</p>
+      <div class="outils"><span class="etiquette">papier</span><span class="etiquette" style="background: var(--chartreuse)">crayon</span><span class="etiquette" style="background: var(--rose)">ordinateur</span></div>
+      <p class="main" style="font-size: 2rem; color: var(--encre); margin-top: 1.2rem">« C'est trop mon rêve. »</p>
+    </div>
+    <figure class="papier tourne scotch"><img src="img/img_9138.jpg" alt="Grappe de suspensions givrées bleues et blanches, vues d'en dessous." loading="lazy"></figure>
+  </div>
+  <span class="folio g">13</span>
+</section>
+
+<!-- 14 Quatrième de couverture -->
+<section class="double dos" aria-labelledby="t-dos">
+  <h2 class="affiche dos__mot" id="t-dos">Tout.</h2>
+  <blockquote class="cite">Toutes ces contradictions, il contient absolument tout, le verre.</blockquote>
+  <p style="margin-top: 1rem">Valérie de Roquemaurel</p>
+  <div class="credits">
+    <span>Entretien, photographies et vidéos : Mickael Senard.</span>
+    <span>Atelier de Valérie de Roquemaurel, Pomy, Vaud.</span>
+    <img src="img/myesthete-eye-blanc.png" alt="MY ESTHÈTE">
+  </div>
+</section>
+
+</main>
+
+<script>
+  // Vidéos muettes : lecture seulement à l'écran, jamais d'office si le mouvement est réduit
+  const calme = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.lecteur').forEach(l => {
+    const v = l.querySelector('video'), b = l.querySelector('button');
+    let voulu = !calme;
+    const maj = () => b.textContent = v.paused ? 'Lire' : 'Pause';
+    b.addEventListener('click', () => { voulu = v.paused; voulu ? v.play() : v.pause(); });
+    v.addEventListener('play', maj); v.addEventListener('pause', maj); maj();
+    new IntersectionObserver(([e]) => { if (e.isIntersecting && voulu) v.play().catch(() => {}); else if (!e.isIntersecting) v.pause(); }, { threshold: .35 }).observe(v);
+  });
+</script>
+</body>
+</html>
