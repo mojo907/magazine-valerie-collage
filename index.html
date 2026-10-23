@@ -96,6 +96,9 @@
   .planche__feuille { background: #141414; padding: clamp(10px, 2vw, 22px); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(6px, 1vw, 12px); position: relative; }
   .planche__feuille figure { position: relative; }
   .planche__feuille img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+  /* Sérigraphie façon Warhol : recadrage serré, puis 4 aplats (encre + 3 couleurs) par filtre SVG */
+  .pop { overflow: hidden; aspect-ratio: 3 / 4; background: var(--encre); }
+  .pop img { transform: scale(1.9); transform-origin: var(--o, 30% 36%); filter: var(--f); }
   .planche__feuille figcaption { font: 700 .72rem var(--mono); color: var(--ambre); margin-top: 4px; letter-spacing: .1em; }
   .entoure { position: absolute; inset: -8% -10%; pointer-events: none; z-index: 2; }
   .entoure path { fill: none; stroke: var(--rouge); stroke-width: 4; stroke-linecap: round; }
@@ -175,9 +178,9 @@
   .romont h2 s { white-space: nowrap; text-decoration-color: var(--encre); text-decoration-thickness: .08em; }
   .bulles { display: grid; gap: 1.2rem; max-width: 34rem; }
   .bulle { position: relative; padding: 1rem 1.2rem; border: 3px solid var(--encre); background: var(--blanc); font-size: 1.05rem; }
-  .bulle::after { content: ""; position: absolute; bottom: -16px; left: 28px; width: 24px; height: 16px; background: inherit; border: 3px solid var(--encre); border-top: 0; clip-path: polygon(0 0, 100% 0, 0 100%); }
+  .bulle::after { content: ""; position: absolute; bottom: -19px; left: 26px; width: 26px; height: 19px; background: var(--encre); clip-path: polygon(0 0, 100% 0, 0 100%); }
   .bulle.elle { justify-self: end; background: var(--cobalt); color: var(--blanc); font: italic 1.5rem/1.2 var(--serif); }
-  .bulle.elle::after { left: auto; right: 28px; clip-path: polygon(0 0, 100% 0, 100% 100%); }
+  .bulle.elle::after { left: auto; right: 26px; clip-path: polygon(0 0, 100% 0, 100% 100%); }
   .bulle small { display: block; font: 700 .72rem var(--mono); letter-spacing: .14em; text-transform: uppercase; opacity: .8; margin-bottom: .3rem; font-style: normal; }
   .romont__grille { display: grid; gap: clamp(20px, 3vw, 40px); align-items: start; }
   .romont video { width: 100%; aspect-ratio: 9 / 14; object-fit: cover; border: 10px solid var(--blanc); }
@@ -209,7 +212,8 @@
 
   .texte { max-width: 36rem; font-size: .95rem; }
 
-  @media (min-width: 860px) {
+  @media (min-width: 700px) {
+    .couv__bas { max-width: min(30rem, 44%); }
     .couv__photo { width: clamp(220px, 25vw, 420px); right: 7%; bottom: -3%; }
     .couv__photo2 { right: 36%; bottom: 6%; }
     .trop { grid-template-columns: 1.15fr 1fr; align-items: center; }
@@ -218,11 +222,11 @@
     .origines__grille { grid-template-columns: 1.2fr .8fr; }
     .volupte__grille { grid-template-columns: 1fr 1fr; }
     .mur__grille { grid-template-columns: .9fr 1.1fr; }
-    .romont__grille { grid-template-columns: 1.3fr .7fr; }
     .ciel__grille { grid-template-columns: 1.2fr .8fr; }
     .sommaire { grid-template-columns: .9fr 1.1fr; align-items: start; }
   }
-  @media (max-width: 859px) {
+  @media (min-width: 700px) { .romont__grille { grid-template-columns: 1.3fr .7fr; } }
+  @media (max-width: 699px) {
     .couv__photo { width: 58vw; right: 4%; bottom: 20%; }
     .couv__photo2 { width: 34vw; right: auto; left: 4%; bottom: 30%; }
     .couv__titre { font-size: 23.5vw; }
@@ -294,14 +298,22 @@
 <section class="double planche" id="planche" aria-labelledby="t-planche">
   <div class="rubrique"><span>Planche contact</span><span>Atelier de Pomy</span></div>
   <h2 class="affiche" id="t-planche">Six poses, zéro pause</h2>
+  <svg width="0" height="0" style="position: absolute" aria-hidden="true"><defs>
+    <filter id="pop9141" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="1.5" intercept="-.22"/><feFuncG type="linear" slope="1.5" intercept="-.22"/><feFuncB type="linear" slope="1.5" intercept="-.22"/></feComponentTransfer><feComponentTransfer><feFuncR type="discrete" tableValues="0.055 0.886 0.965 0.804"/><feFuncG type="discrete" tableValues="0.071 0.212 0.702 0.902"/><feFuncB type="discrete" tableValues="0.188 0.122 0.776 0.239"/></feComponentTransfer></filter>
+    <filter id="pop9142" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="1.5" intercept="-.22"/><feFuncG type="linear" slope="1.5" intercept="-.22"/><feFuncB type="linear" slope="1.5" intercept="-.22"/></feComponentTransfer><feComponentTransfer><feFuncR type="discrete" tableValues="0.055 0.118 0.949 0.965"/><feFuncG type="discrete" tableValues="0.071 0.235 0.635 0.702"/><feFuncB type="discrete" tableValues="0.188 0.824 0.173 0.776"/></feComponentTransfer></filter>
+    <filter id="pop9143" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="1.5" intercept="-.22"/><feFuncG type="linear" slope="1.5" intercept="-.22"/><feFuncB type="linear" slope="1.5" intercept="-.22"/></feComponentTransfer><feComponentTransfer><feFuncR type="discrete" tableValues="0.055 0.055 0.804 0.949"/><feFuncG type="discrete" tableValues="0.071 0.478 0.902 0.635"/><feFuncB type="discrete" tableValues="0.188 0.337 0.239 0.173"/></feComponentTransfer></filter>
+    <filter id="pop9144" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="1.5" intercept="-.22"/><feFuncG type="linear" slope="1.5" intercept="-.22"/><feFuncB type="linear" slope="1.5" intercept="-.22"/></feComponentTransfer><feComponentTransfer><feFuncR type="discrete" tableValues="0.055 0.886 0.949 0.118"/><feFuncG type="discrete" tableValues="0.071 0.212 0.635 0.235"/><feFuncB type="discrete" tableValues="0.188 0.122 0.173 0.824"/></feComponentTransfer></filter>
+    <filter id="pop9145" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="1.5" intercept="-.22"/><feFuncG type="linear" slope="1.5" intercept="-.22"/><feFuncB type="linear" slope="1.5" intercept="-.22"/></feComponentTransfer><feComponentTransfer><feFuncR type="discrete" tableValues="0.055 0.965 0.804 0.118"/><feFuncG type="discrete" tableValues="0.071 0.702 0.902 0.235"/><feFuncB type="discrete" tableValues="0.188 0.776 0.239 0.824"/></feComponentTransfer></filter>
+    <filter id="pop9146" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="1.5" intercept="-.22"/><feFuncG type="linear" slope="1.5" intercept="-.22"/><feFuncB type="linear" slope="1.5" intercept="-.22"/></feComponentTransfer><feComponentTransfer><feFuncR type="discrete" tableValues="0.055 0.949 0.965 0.055"/><feFuncG type="discrete" tableValues="0.071 0.635 0.702 0.478"/><feFuncB type="discrete" tableValues="0.188 0.173 0.776 0.337"/></feComponentTransfer></filter>
+  </defs></svg>
   <div class="planche__feuille">
-    <figure><img src="img/img_9141.jpg" alt="Valérie rit devant le four." loading="lazy"><figcaption>9141</figcaption></figure>
-    <figure><img src="img/img_9142.jpg" alt="Valérie sourit, une main sur la hanche." loading="lazy"><figcaption>9142</figcaption>
+    <figure><div class="pop" style="--o: 31% 34%; --f: url(#pop9141)"><img src="img/img_9141.jpg" alt="Valérie rit devant le four." loading="lazy"></div><figcaption>9141</figcaption></figure>
+    <figure><div class="pop" style="--o: 33% 35%; --f: url(#pop9142)"><img src="img/img_9142.jpg" alt="Valérie sourit, une main sur la hanche." loading="lazy"></div><figcaption>9142</figcaption>
       <svg class="entoure" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M50 4 C82 2 97 22 96 50 C95 80 76 97 48 96 C18 95 3 76 4 48 C5 22 24 6 56 7"/></svg></figure>
-    <figure><img src="img/img_9143.jpg" alt="Valérie en lunettes de soleil." loading="lazy"><figcaption>9143</figcaption></figure>
-    <figure><img src="img/img_9144.jpg" alt="Valérie, le regard ailleurs." loading="lazy"><figcaption>9144</figcaption></figure>
-    <figure><img src="img/img_9145.jpg" alt="Valérie, appuyée contre le four." loading="lazy"><figcaption>9145</figcaption></figure>
-    <figure><img src="img/img_9146.jpg" alt="Valérie baisse les yeux, souriante." loading="lazy"><figcaption>9146</figcaption></figure>
+    <figure><div class="pop" style="--o: 23% 35%; --f: url(#pop9143)"><img src="img/img_9143.jpg" alt="Valérie en lunettes de soleil." loading="lazy"></div><figcaption>9143</figcaption></figure>
+    <figure><div class="pop" style="--o: 30% 37%; --f: url(#pop9144)"><img src="img/img_9144.jpg" alt="Valérie, le regard ailleurs." loading="lazy"></div><figcaption>9144</figcaption></figure>
+    <figure><div class="pop" style="--o: 28% 37%; --f: url(#pop9145)"><img src="img/img_9145.jpg" alt="Valérie, appuyée contre le four." loading="lazy"></div><figcaption>9145</figcaption></figure>
+    <figure><div class="pop" style="--o: 33% 38%; --f: url(#pop9146)"><img src="img/img_9146.jpg" alt="Valérie baisse les yeux, souriante." loading="lazy"></div><figcaption>9146</figcaption></figure>
   </div>
   <p class="main planche__note">impossible de tenir la pose</p>
   <span class="folio g">04</span>
